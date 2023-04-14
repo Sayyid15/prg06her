@@ -296,6 +296,8 @@ router.put("/:_id", async (req, res) => {
 
 // Create route / delete
 router.delete("/:_id", async (req, res) => {
+    res.setHeader("Allow", "GET, POST, OPTIONS");
+
     try {
         await Swimmer.findByIdAndDelete(req.params._id);
 
@@ -308,13 +310,17 @@ router.delete("/:_id", async (req, res) => {
 
 // Create route / options
 router.options("/", (req, res) => {
-    res.setHeader("Allow", "GET, POST, OPTIONS");
-    res.send("");
+    res.setHeader("Allow", "GET, POST, OPTIONS,");
+    res.setHeader("Access-Control-Allow-Methods","GET, POST, OPTIONS");
+    res.send();
 })
 
 // options for detail: OPTIONS /id
 router.options("/:id", async (req, res) => {
+    res.setHeader("Allow", "GET, POST, OPTIONS,");
+    res.setHeader("Access-Control-Allow-Methods","GET, POST, OPTIONS,DELETE,PUT");
     res.set({
+
         'Allow': 'GET, PUT, DELETE, OPTIONS'
     }).send()
 })
